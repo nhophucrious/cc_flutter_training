@@ -1,57 +1,44 @@
-import 'package:cc_flutter_training/service/api_service.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:cc_flutter_training/ui/controllers/users_controller.dart';
 
 class UsersPage extends StatelessWidget {
-  const UsersPage({super.key});
+  const UsersPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Users Page'),),
-      body: Center(
-        child: _body(),
-      )
-    );
-  }
+    final UsersController usersController = Get.put(UsersController());
 
-  FutureBuilder _body() {
-    final apiService = ApiService(Dio(BaseOptions(contentType: 'application/json')));
-    return FutureBuilder(
-      future: apiService.getUsers(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Users')),
+      body: Obx(() {
+        if (usersController.users.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         } else {
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-
-                  trailing: const Icon(Icons.arrow_forward_ios),
-                  titleAlignment: ListTileTitleAlignment.center,
-                  leading: CircleAvatar(backgroundColor: Colors.pink[200],
-                  child: const Icon(Icons.person),),
-                  title: Text(snapshot.data[index].name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    Text(snapshot.data[index].address.street),
-                    Text(snapshot.data[index].address.suite),
-                    Text(snapshot.data[index].address.city),
-                    Text(snapshot.data[index].address.zipcode),
-                    Text(snapshot.data[index].address.geo.lat + ', ' + snapshot.data[index].address.geo.lng),
-                  ],),
-                );
-              },
-            );
-          }
+          return ListView.builder(
+            itemCount: usersController.users.length,
+            itemBuilder: (context, index) {
+              final user = usersController.users[index];
+              return ListTile(
+                trailing: const Icon(Icons.arrow_forward_ios),
+                titleAlignment: ListTileTitleAlignment.center,
+                leading: CircleAvatar(backgroundColor: Colors.pink[200], child: const Icon(Icons.person)),
+                title: Text(user.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(user.address.street),
+                    Text(user.address.suite),
+                    Text(user.address.city),
+                    Text(user.address.zipcode),
+                    Text('${user.address.geo.lat}, ${user.address.geo.lng}'),
+                  ],
+                ),
+              );
+            },
+          );
         }
-      },
+      }),
     );
   }
 }
