@@ -1,3 +1,4 @@
+import 'package:cc_flutter_training/ui/views/individual_user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cc_flutter_training/ui/controllers/users_controller.dart';
@@ -20,7 +21,12 @@ class UsersPage extends StatelessWidget {
             itemBuilder: (context, index) {
               final user = usersController.users[index];
               return ListTile(
-                trailing: const Icon(Icons.arrow_forward_ios),
+                trailing: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {
+                    Get.to(() => IndividualUserPage(), arguments: user);
+                  },
+                ),
                 titleAlignment: ListTileTitleAlignment.center,
                 leading: CircleAvatar(backgroundColor: Colors.pink[200], child: const Icon(Icons.person)),
                 title: Text(user.name, style: const TextStyle(fontWeight: FontWeight.bold)),
