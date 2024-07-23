@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cc_flutter_training/ui/models/geo_model.dart';
+import 'package:floor/floor.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'address_model.g.dart';
@@ -21,4 +24,16 @@ class Address {
 
   factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
   Map<String, dynamic> toJson() => _$AddressToJson(this);
+}
+
+class AddressConverter extends TypeConverter<Address, String> {
+  @override
+  Address decode(String databaseValue) {
+    return Address.fromJson(json.decode(databaseValue));
+  }
+
+  @override
+  String encode(Address value) {
+    return json.encode(value.toJson());
+  }
 }
