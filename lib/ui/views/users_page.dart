@@ -30,8 +30,22 @@ class UsersPage extends StatelessWidget {
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(snapshot.data[index].name),
-                  subtitle: Text(snapshot.data[index].email),
+
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  titleAlignment: ListTileTitleAlignment.center,
+                  leading: CircleAvatar(backgroundColor: Colors.pink[200],
+                  child: const Icon(Icons.person),),
+                  title: Text(snapshot.data[index].name,
+                  style: const TextStyle(fontWeight: FontWeight.bold),),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Text(snapshot.data[index].address.street),
+                    Text(snapshot.data[index].address.suite),
+                    Text(snapshot.data[index].address.city),
+                    Text(snapshot.data[index].address.zipcode),
+                    Text(snapshot.data[index].address.geo.lat + ', ' + snapshot.data[index].address.geo.lng),
+                  ],),
                 );
               },
             );
