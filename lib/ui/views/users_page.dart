@@ -11,7 +11,7 @@ class UsersPage extends StatelessWidget {
     final UsersController usersController = Get.put(UsersController());
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Users')),
+      appBar: AppBar(title: const Text('Users'), backgroundColor: Colors.pink[200],),
       body: Obx(() {
         if (usersController.users.isEmpty) {
           return const Center(child: CircularProgressIndicator());

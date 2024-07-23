@@ -8,12 +8,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Training App'),),
+      appBar: AppBar(title: const Text('Flutter Training App',
+      ),backgroundColor: Colors.pink[200],),
       body: Center(
         child: ListView(
           children: [
             ListTile(
-              iconColor: Colors.red,
+              iconColor: Colors.pink[200],
               leading: const Icon(Icons.person),
               title: const Text('Users Page'),
               onTap: () {
