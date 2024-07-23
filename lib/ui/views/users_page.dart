@@ -1,6 +1,6 @@
-import 'package:cc_flutter_training/ui/views/individual_user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cc_flutter_training/ui/views/individual_user_page.dart';
 import 'package:cc_flutter_training/ui/controllers/users_controller.dart';
 
 class UsersPage extends StatelessWidget {
@@ -8,10 +8,13 @@ class UsersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UsersController usersController = Get.put(UsersController());
+    final UsersController usersController = Get.find<UsersController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Users'), backgroundColor: Colors.pink[200],),
+      appBar: AppBar(
+        title: const Text('Users'),
+        backgroundColor: Colors.pink[200],
+      ),
       body: Obx(() {
         if (usersController.users.isEmpty) {
           return const Center(child: CircularProgressIndicator());
@@ -27,9 +30,14 @@ class UsersPage extends StatelessWidget {
                     Get.to(() => IndividualUserPage(), arguments: user);
                   },
                 ),
-                titleAlignment: ListTileTitleAlignment.center,
-                leading: CircleAvatar(backgroundColor: Colors.pink[200], child: const Icon(Icons.person)),
-                title: Text(user.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                leading: CircleAvatar(
+                  backgroundColor: Colors.pink[200],
+                  child: const Icon(Icons.person),
+                ),
+                title: Text(
+                  user.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
