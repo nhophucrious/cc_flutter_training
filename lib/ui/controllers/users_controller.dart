@@ -17,6 +17,7 @@ class UsersController extends GetxController {
     try {
       final fetchedUsers = await apiService.getUsers();
       users.assignAll(fetchedUsers);
+      Get.snackbar('Success', 'Users fetched successfully!', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 2));
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch users: $e');
     }

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class IndividualUserPage extends StatelessWidget {
  IndividualUserPage({super.key});
 
- UsersController usersController = Get.find();
+ final UsersController usersController = Get.find();
 
   @override
   Widget build(BuildContext context) {
