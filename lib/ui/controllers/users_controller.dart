@@ -1,13 +1,31 @@
 import 'package:cc_flutter_training/database/daos/user_dao.dart';
 import 'package:get/get.dart';
+import 'package:dio/dio.dart';
 import 'package:cc_flutter_training/database/app_database.dart';
 import 'package:cc_flutter_training/ui/models/user_model.dart';
 import 'package:cc_flutter_training/service/api_service.dart';
 
+class UsersBinding extends Bindings {
+  @override
+  void dependencies() async {
+    // Initialize the database and UserDao
+    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    final userDao = database.userDao;
+    
+    // Initialize the ApiService with Dio
+    final dio = Dio();
+    final apiService = ApiService(dio);
+
+    // Register the dependencies
+    Get.put(userDao);
+    Get.put(apiService);
+    Get.lazyPut<UsersController>(() => UsersController(apiService: apiService, userDao: userDao));
+  }
+}
+
 class UsersController extends GetxController {
   final UserDao userDao;
   final ApiService apiService;
-  final RxList<User> users = <User>[].obs;
 
   UsersController({required this.userDao, required this.apiService});
 
@@ -16,6 +34,8 @@ class UsersController extends GetxController {
     super.onInit();
     fetchUsers();
   }
+
+  final RxList<User> users = <User>[].obs;
 
   Future<void> fetchUsers() async {
     try {

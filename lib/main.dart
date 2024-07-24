@@ -9,21 +9,18 @@ import 'package:dio/dio.dart';
 
 
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:cc_flutter_training/app/routes/app_pages.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  final userDao = database.userDao;
-  final dio = Dio();
-  final apiService = ApiService(dio);
 
-  runApp(MyApp(userDao: userDao, apiService: apiService));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final UserDao userDao;
-  final ApiService apiService;
-
-  const MyApp({Key? key, required this.userDao, required this.apiService}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +28,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Training',
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      initialBinding: BindingsBuilder(() {
-        Get.put(UserDaoController(userDao)); // Inject UserDaoController
-        Get.put(UsersController(userDao: userDao, apiService: apiService));
-      }),
+      initialBinding: UsersBinding(),
     );
   }
 }
+
 
 
 class UserDaoController extends GetxController {
