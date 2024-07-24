@@ -1,11 +1,10 @@
-import 'package:cc_flutter_training/ui/controllers/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class IndividualUserPage extends StatelessWidget {
  IndividualUserPage({super.key});
 
- final UsersController usersController = Get.find();
+ //final UsersController usersController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +14,16 @@ class IndividualUserPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            CircleAvatar(
+              radius: Get.width / 3,
+              backgroundColor: Colors.pink[200],
+              child: Icon(Icons.person, size: Get.width / 4),
+            ),
             Text('Hello ${Get.arguments.name}', style: const TextStyle(fontWeight: FontWeight.bold),),
-            Text('You are one of ${usersController.users.length} users'),
+            Text('Email: ${Get.arguments.email}'),
+            Text('Phone: ${Get.arguments.phone}'),
+            Text('Website: ${Get.arguments.website}'),
+            Text('Company: ${Get.arguments.company.name}'),
           ],))
     );
   }

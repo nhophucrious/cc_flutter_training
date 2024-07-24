@@ -1,14 +1,16 @@
+import 'package:cc_flutter_training/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cc_flutter_training/ui/views/individual_user_page.dart';
 import 'package:cc_flutter_training/ui/controllers/users_controller.dart';
 
-class UsersPage extends StatelessWidget {
-  const UsersPage({Key? key}) : super(key: key);
+class UsersPage extends GetView<UsersController> { // GetView
+  const UsersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final UsersController usersController = Get.find<UsersController>();
+
+    // final UsersController usersController = Get.find<UsersController>(); 
 
     return Scaffold(
       appBar: AppBar(
@@ -16,18 +18,21 @@ class UsersPage extends StatelessWidget {
         backgroundColor: Colors.pink[200],
       ),
       body: Obx(() {
-        if (usersController.users.isEmpty) {
+        if (controller.users.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         } else {
           return ListView.builder(
-            itemCount: usersController.users.length,
+            itemCount: controller.users.length,
             itemBuilder: (context, index) {
-              final user = usersController.users[index];
+              final user = controller.users[index];
+
               return ListTile(
                 trailing: IconButton(
                   icon: const Icon(Icons.arrow_forward_ios),
                   onPressed: () {
-                    Get.to(() => IndividualUserPage(), arguments: user);
+                    // Todo : toNamed 
+                    Get.toNamed(Routes.INDIVIDUAL_USER, arguments: user);
+                    // Get.to(() => IndividualUserPage(), arguments: user);
                   },
                 ),
                 leading: CircleAvatar(

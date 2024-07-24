@@ -1,3 +1,4 @@
+import 'package:cc_flutter_training/app/routes/app_pages.dart';
 import 'package:cc_flutter_training/ui/views/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -16,9 +17,10 @@ class HomePage extends StatelessWidget {
             ListTile(
               iconColor: Colors.pink[200],
               leading: const Icon(Icons.person),
-              title: const Text('Users Page'),
+              title: const Text('Users'),
               onTap: () {
-                Get.to(() => const UsersPage());
+                Get.toNamed(Routes.USERS);
+                // Get.to(() => const UsersPage());
               },
             ),
           ],

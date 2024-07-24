@@ -1,11 +1,13 @@
+import 'package:cc_flutter_training/app/routes/app_pages.dart';
 import 'package:cc_flutter_training/database/daos/user_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'database/app_database.dart';
 import 'service/api_service.dart';
 import 'ui/controllers/users_controller.dart';
-import 'ui/views/home_page.dart';
 import 'package:dio/dio.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +29,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Training',
-      home: HomePage(),
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
       initialBinding: BindingsBuilder(() {
         Get.put(UserDaoController(userDao)); // Inject UserDaoController
         Get.put(UsersController(userDao: userDao, apiService: apiService));
@@ -35,6 +38,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
 class UserDaoController extends GetxController {
   final UserDao userDao;
