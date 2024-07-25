@@ -1,7 +1,6 @@
 import 'package:cc_flutter_training/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cc_flutter_training/ui/views/individual_user_page.dart';
 import 'package:cc_flutter_training/ui/controllers/users_controller.dart';
 
 class UsersPage extends GetView<UsersController> { // GetView

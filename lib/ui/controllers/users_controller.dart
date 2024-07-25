@@ -19,7 +19,7 @@ class UsersBinding extends Bindings {
     // Register the dependencies
     Get.put(userDao);
     Get.put(apiService);
-    Get.lazyPut<UsersController>(() => UsersController(apiService: apiService, userDao: userDao));
+    Get.lazyPut<UsersController>(() => UsersController(apiService: apiService, userDao: userDao), fenix: true);
   }
 }
 
@@ -36,6 +36,8 @@ class UsersController extends GetxController {
   }
 
   final RxList<User> users = <User>[].obs;
+  final RxBool isLoading = true.obs;
+  final RxString errorMessage = ''.obs;
 
   Future<void> fetchUsers() async {
     try {
@@ -46,9 +48,9 @@ class UsersController extends GetxController {
         users.assignAll(localUsers);
       } else {
         final fetchedUsers = await apiService.getUsers();
-        /*for (var user in fetchedUsers) {
+        for (var user in fetchedUsers) {
           await userDao.insertUser(user);
-        }*/
+        }
         users.assignAll(fetchedUsers);
         Get.snackbar('Success', 'Users fetched and saved successfully!',
             snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 2));

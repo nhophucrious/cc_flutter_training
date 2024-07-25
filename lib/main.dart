@@ -1,26 +1,17 @@
 import 'package:cc_flutter_training/app/routes/app_pages.dart';
-import 'package:cc_flutter_training/database/daos/user_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'database/app_database.dart';
-import 'service/api_service.dart';
 import 'ui/controllers/users_controller.dart';
 import 'package:dio/dio.dart';
-
-
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:cc_flutter_training/app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +22,4 @@ class MyApp extends StatelessWidget {
       initialBinding: UsersBinding(),
     );
   }
-}
-
-
-
-class UserDaoController extends GetxController {
-  final UserDao userDao;
-
-  UserDaoController(this.userDao);
 }

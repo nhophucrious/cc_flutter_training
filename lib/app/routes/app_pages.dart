@@ -1,4 +1,5 @@
 
+import 'package:cc_flutter_training/ui/controllers/users_controller.dart';
 import 'package:get/route_manager.dart';
 
 import '../../ui/views/home_page.dart';
@@ -15,11 +16,12 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => HomePage()
+      page: () => const HomePage()
     ),
     GetPage(
       name: _Paths.USERS,
-      page: () => UsersPage()
+      page: () => const UsersPage(),
+      binding: UsersBinding()
     ),
     GetPage(
       name: _Paths.INDIVIDUAL_USER,
