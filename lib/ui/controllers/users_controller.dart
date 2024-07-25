@@ -1,4 +1,5 @@
 import 'package:cc_flutter_training/database/daos/user_dao.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:cc_flutter_training/database/app_database.dart';
@@ -35,6 +36,13 @@ class UsersController extends GetxController {
     fetchUsers();
   }
 
+  @override
+  void onClose() {
+    textEditingController.dispose();
+    super.onClose();
+  }
+
+  final TextEditingController textEditingController = TextEditingController();
   final RxList<User> users = <User>[].obs;
   final RxBool isLoading = true.obs;
   final RxString errorMessage = ''.obs;
@@ -57,6 +65,18 @@ class UsersController extends GetxController {
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch users: $e');
+    }
+  }
+
+  // delete all users from the database
+  Future<void> deleteAllUsers() async {
+    try {
+      await userDao.deleteAllUsers();
+      users.clear();
+      Get.snackbar('Success', 'All users deleted successfully!',
+          snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 2));
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to delete users: $e');
     }
   }
 }

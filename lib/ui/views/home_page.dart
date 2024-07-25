@@ -9,8 +9,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Training App',
-      ),backgroundColor: Colors.pink[200],),
+      appBar: AppBar(
+        title: const Text('Flutter Training App'),
+        backgroundColor: Colors.pink[200],
+      ),
       body: Center(
         child: ListView(
           children: [
@@ -19,7 +21,7 @@ class HomePage extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('Users'),
               onTap: () {
-                Get.toNamed(Routes.USERS);
+                Get.toNamed(Paths.USERS);
                 // Get.to(() => const UsersPage());
               },
             ),

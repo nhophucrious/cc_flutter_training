@@ -15,45 +15,91 @@ class UsersPage extends GetView<UsersController> { // GetView
       appBar: AppBar(
         title: const Text('Users'),
         backgroundColor: Colors.pink[200],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              controller.deleteAllUsers();
+            },
+          ),
+        ],
       ),
       body: Obx(() {
         if (controller.users.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          // return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: ElevatedButton(
+              onPressed: () {
+                controller.fetchUsers();
+              },
+              child: const Text('Fetch Users'),
+            )
+          );
         } else {
-          return ListView.builder(
-            itemCount: controller.users.length,
-            itemBuilder: (context, index) {
-              final user = controller.users[index];
-
-              return ListTile(
-                trailing: IconButton(
-                  icon: const Icon(Icons.arrow_forward_ios),
-                  onPressed: () {
-                    // Todo : toNamed 
-                    Get.toNamed(Routes.INDIVIDUAL_USER, arguments: user);
-                    // Get.to(() => IndividualUserPage(), arguments: user);
+          return Column(
+            children: [
+              TextField(
+                controller: controller.textEditingController,
+                decoration: const InputDecoration(
+                  hintText: 'Type something here stupid',
+                  prefixIcon: Icon(Icons.search),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      debugPrint(controller.textEditingController.text);
+                    },
+                    child: const Text('Test')
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.textEditingController.clear();
+                    },
+                    child: const Text('Clear text field')
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.users.length,
+                  itemBuilder: (context, index) {
+                    final user = controller.users[index];
+                
+                    return ListTile(
+                      trailing: IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        onPressed: () {
+                          // Todo : toNamed 
+                          Get.toNamed(Paths.INDIVIDUAL_USER, arguments: user);
+                          // Get.to(() => IndividualUserPage(), arguments: user);
+                        },
+                      ),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.pink[200],
+                        child: const Icon(Icons.person),
+                      ),
+                      title: Text(
+                        user.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(user.address.street),
+                          Text(user.address.suite),
+                          Text(user.address.city),
+                          Text(user.address.zipcode),
+                          Text('${user.address.geo.lat}, ${user.address.geo.lng}'),
+                        ],
+                      ),
+                    );
                   },
                 ),
-                leading: CircleAvatar(
-                  backgroundColor: Colors.pink[200],
-                  child: const Icon(Icons.person),
-                ),
-                title: Text(
-                  user.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(user.address.street),
-                    Text(user.address.suite),
-                    Text(user.address.city),
-                    Text(user.address.zipcode),
-                    Text('${user.address.geo.lat}, ${user.address.geo.lng}'),
-                  ],
-                ),
-              );
-            },
+              ),
+            ],
           );
         }
       }),
