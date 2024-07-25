@@ -2,11 +2,14 @@ import 'package:cc_flutter_training/ui/models/address_model.dart';
 import 'package:cc_flutter_training/ui/models/company_model.dart';
 import 'package:floor/floor.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:isar/isar.dart';
 
 part 'user_model.g.dart';
 
 @JsonSerializable()
 @entity
+// for isar
+@collection
 class User {
   @primaryKey
   final int id;

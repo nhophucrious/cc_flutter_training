@@ -25,6 +25,15 @@ class HomePage extends StatelessWidget {
                 // Get.to(() => const UsersPage());
               },
             ),
+            ListTile(
+              iconColor: Colors.pink[200],
+              leading: const Icon(Icons.person_2),
+              title: const Text('Users (Alt)'),
+              onTap: () {
+                Get.toNamed(Paths.USERS_ALT);
+                // Get.to(() => const UsersPage());
+              },
+            ),
           ],
         ),
       ),
