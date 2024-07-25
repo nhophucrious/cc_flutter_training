@@ -80,7 +80,7 @@ class _$AppDatabase extends AppDatabase {
     Callback? callback,
   ]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
-      version: 1,
+      version: 2,
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
         await callback?.onConfigure?.call(database);
@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `User` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `username` TEXT NOT NULL, `email` TEXT NOT NULL, `address` TEXT NOT NULL, `phone` TEXT NOT NULL, `website` TEXT NOT NULL, `company` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `User` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `username` TEXT NOT NULL, `email` TEXT NOT NULL, `address` TEXT NOT NULL, `website` TEXT NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -124,9 +124,7 @@ class _$UserDao extends UserDao {
                   'username': item.username,
                   'email': item.email,
                   'address': _addressConverter.encode(item.address),
-                  'phone': item.phone,
-                  'website': item.website,
-                  'company': _companyConverter.encode(item.company)
+                  'website': item.website
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -146,9 +144,7 @@ class _$UserDao extends UserDao {
             username: row['username'] as String,
             email: row['email'] as String,
             address: _addressConverter.decode(row['address'] as String),
-            phone: row['phone'] as String,
-            website: row['website'] as String,
-            company: _companyConverter.decode(row['company'] as String)));
+            website: row['website'] as String));
   }
 
   @override
@@ -160,9 +156,7 @@ class _$UserDao extends UserDao {
             username: row['username'] as String,
             email: row['email'] as String,
             address: _addressConverter.decode(row['address'] as String),
-            phone: row['phone'] as String,
-            website: row['website'] as String,
-            company: _companyConverter.decode(row['company'] as String)),
+            website: row['website'] as String),
         arguments: [id]);
   }
 
@@ -184,4 +178,3 @@ class _$UserDao extends UserDao {
 
 // ignore_for_file: unused_element
 final _addressConverter = AddressConverter();
-final _companyConverter = CompanyConverter();

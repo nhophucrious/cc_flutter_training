@@ -15,10 +15,10 @@ class User {
   final String email;
   @TypeConverters([AddressConverter])
   final Address address;
-  final String phone;
+  // final String phone;
   final String website;
-  @TypeConverters([CompanyConverter])
-  final Company company;
+  // @TypeConverters([CompanyConverter])
+  // final Company company;
 
   User({
     required this.id,
@@ -26,9 +26,9 @@ class User {
     required this.username,
     required this.email,
     required this.address,
-    required this.phone,
+    // required this.phone,
     required this.website,
-    required this.company,
+    // required this.company
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

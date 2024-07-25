@@ -10,7 +10,10 @@ class UsersBinding extends Bindings {
   @override
   void dependencies() async {
     // Initialize the database and UserDao
-    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    final database = await $FloorAppDatabase
+      .databaseBuilder('app_database.db')
+      .addMigrations([migration1to2])
+      .build();
     final userDao = database.userDao;
     
     // Initialize the ApiService with Dio

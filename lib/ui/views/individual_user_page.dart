@@ -21,9 +21,9 @@ class IndividualUserPage extends StatelessWidget {
             ),
             Text('Hello ${Get.arguments.name}', style: const TextStyle(fontWeight: FontWeight.bold),),
             Text('Email: ${Get.arguments.email}'),
-            Text('Phone: ${Get.arguments.phone}'),
+            // Text('Phone: ${Get.arguments.phone}'),
             Text('Website: ${Get.arguments.website}'),
-            Text('Company: ${Get.arguments.company.name}'),
+            // Text('Company: ${Get.arguments.company.name}'),
           ],))
     );
   }
